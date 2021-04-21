@@ -1,5 +1,37 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block body %}
-    TODO
+<div>
+    <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group" style="margin-bottom: 0">
+            <label for="newPost" style="display: none"></label>
+            <textarea
+                    oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                    class="form-control"
+                    id="newPost"
+                    rows="1"
+                    maxlength="280"
+                    name="content"
+                    placeholder="What's on your mind?"></textarea>
+        </div>
+        <input class="post-submit btn btn-primary" type="submit" value="Tweet">
+    </form>
+</div>
+<div class="allPosts">
+    {% for item in post_data %}
+    <div><h1><a href="{% url 'profile' item.user.username %}">{{item.user.username}}</a></h1>
+        <p>{{item.post_date}}</p>
+        <h2>{{item.post}}</h2>
+    </div>
+    <hr>
+    {% endfor %}
+</div>
+   
+{% endblock %}
+{% block script %}
+<script src="{% static 'network/index.js' %}"></script>
+
+
 {% endblock %}

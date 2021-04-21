@@ -1,0 +1,17 @@
+{% extends "network/layout.html" %}
+{% block body %}
+<h1>{{user.username}}</h1>
+<h3>{{user.email}}</h3>
+<h3>{{user.date_joined}}</h3>
+<br>
+<br>
+<hr>
+{% for item in posts %}
+    <div><h1><a href="{% url 'profile' item.user.username %}">{{item.user.username}}</a></h1>
+        <p>{{item.posts}}</p>
+        <h2>{{item.post}}</h2>
+    </div>
+    <hr>
+    {% endfor %}
+
+{% endblock %}
