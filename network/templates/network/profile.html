@@ -1,17 +1,32 @@
 {% extends "network/layout.html" %}
 {% block body %}
-<h1>{{user.username}}</h1>
-<h3>{{user.email}}</h3>
-<h3>{{user.date_joined}}</h3>
+<h1>{{user_details.username}}</h1>
+<h3>{{user_details.email}}</h3>
+<h3>{{user_details.date_joined}}</h3>
+<h3>Following:{{user_details.followee.count}}</h3>
+<h3>Followers:{{user_details.followers.count}}</h3>
+
+{% if user_details.is_authenticated and user_details != user %}
+<form action="{% url 'profile' user_details.username %}" method="post">
+    {% csrf_token %}
+
+    {% if following_status %}
+    <input type="submit" name="unfollow_btn" value="Unfollow" class="btn btn-primary" id="unfollow_Btn" style="width: 96px">
+    {% else %}
+    <input type="submit" name="follow_btn" value="Follow" class="btn btn-primary">
+    {% endif %}
+</form>
+{% endif %}
 <br>
 <br>
 <hr>
 {% for item in posts %}
-    <div><h1><a href="{% url 'profile' item.user.username %}">{{item.user.username}}</a></h1>
-        <p>{{item.posts}}</p>
-        <h2>{{item.post}}</h2>
-    </div>
-    <hr>
-    {% endfor %}
+<div>
+    <h1><a href="{% url 'profile' item.user.username %}">{{item.user.username}}</a></h1>
+    <p>{{item.post_date}}</p>
+    <h2>{{item.post}}</h2>
+</div>
+<hr>
+{% endfor %}
 
 {% endblock %}

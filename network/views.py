@@ -26,15 +26,52 @@ def index(request):
         })
 
 def profileView(request,user_name):
+    is_followed = False
     user_details = User.objects.get(username=user_name)
     post_by_user=user_details.posts.order_by("-post_date").all()
     print("from profile")
     print(post_by_user)
+    print(user_details)
+    if request.method == "POST":
+            if not request.user.is_authenticated:
+                return HttpResponseRedirect(reverse('login'))
+
+            if "unfollow_btn" in request.POST:
+                Follower.objects.get(user=user_details, follower=request.user).delete()
+            elif "follow_btn" in request.POST:
+                Follower.objects.create(user=user_details, follower=request.user)
+            else:
+                print("Error: wrong input name")
+            return HttpResponseRedirect(reverse("profile", args=(user_name, )))
+    
+    if request.user.is_authenticated:
+        is_followed = request.user.followee.filter(user=user_details.id).exists()
     return render(request,"network/profile.html",
-    {"user":user_details,
-    "posts":post_by_user
+    {"user_details":user_details,
+    "posts":post_by_user,
+    "following_status":is_followed
     })
     
+def Following(request):
+    user=User.objects.get(id=request.user.id)
+    print("debugging from following-----------------------")
+    print(user)
+    followed_users_from_followers=user.followee.filter(follower=user)
+    print(followed_users_from_followers)
+    followed_users=[]
+    for item in followed_users_from_followers:
+        print(item.user)
+        followed_users.append(item.user)
+    print("from following:")
+    print(followed_users)
+    
+    posts = Post.objects.filter(user__in=followed_users).order_by("-post_date")
+    return render(request, "network/index.html", {
+            "post_data": posts
+        })
+
+    
+
     
 
 def login_view(request):

@@ -19,7 +19,9 @@
         <input class="post-submit btn btn-primary" type="submit" value="Tweet">
     </form>
 </div>
+
 <div class="allPosts">
+    {% if post_data %}
     {% for item in post_data %}
     <div><h1><a href="{% url 'profile' item.user.username %}">{{item.user.username}}</a></h1>
         <p>{{item.post_date}}</p>
@@ -27,6 +29,9 @@
     </div>
     <hr>
     {% endfor %}
+    {% else %}
+    <h1>nothing to show</h1>
+    {% endif %}
 </div>
    
 {% endblock %}
