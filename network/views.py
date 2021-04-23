@@ -3,8 +3,12 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import User,Follower,Post,Likes
+from django.http.response import JsonResponse
+import json
 
 
 def index(request):
@@ -19,11 +23,35 @@ def index(request):
 
     else:
         all_posts = Post.objects.all().order_by("-post_date")
-        print(all_posts)
-       
+        paginator = Paginator(all_posts, 2)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         return render(request, "network/index.html", {
-            "post_data": all_posts
+            "page_obj": page_obj
         })
+
+@csrf_exempt
+def editPost(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+
+    if request.method !="POST":
+        return JsonResponse({"error": "Post method required."}, status=400)
+
+    data = json.loads(request.body)
+    p_id=data.get("val")
+    old_post=Post.objects.get(id=p_id)
+    print(old_post)
+    edited_content=data.get("post_Content")
+    if edited_content:
+        old_post.post=edited_content
+    
+    old_post.save()
+
+
+    #print(data["post_Content"])
+    return JsonResponse({"message":"successs"},status=200)
+
 
 def profileView(request,user_name):
     is_followed = False
