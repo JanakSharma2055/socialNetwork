@@ -24,10 +24,12 @@ def index(request):
     else:
         all_posts = Post.objects.all().order_by("-post_date")
         paginator = Paginator(all_posts, 2)
+        total_likes=Likes.objects.all()
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         return render(request, "network/index.html", {
-            "page_obj": page_obj
+            "page_obj": page_obj,
+            "total_likes":total_likes
         })
 
 @csrf_exempt
@@ -40,17 +42,26 @@ def editPost(request):
 
     data = json.loads(request.body)
     p_id=data.get("val")
+    change_like=data.get("change_like")
+    print(change_like)
     old_post=Post.objects.get(id=p_id)
     print(old_post)
     edited_content=data.get("post_Content")
     if edited_content:
         old_post.post=edited_content
-    
-    old_post.save()
-
-
+        old_post.save()
+    if change_like:
+        if Likes.objects.filter(liked_by=request.user,liked_post=old_post).exists():
+            Likes.objects.get(liked_by=request.user,liked_post=old_post).delete()
+            print("created object from if")
+        else:
+            Likes.objects.create(liked_by=request.user,liked_post=old_post)
+            print("created object from else")
+        
+    likes_count=old_post.liked_post.count()
+    print("likes count:"+str(likes_count))
     #print(data["post_Content"])
-    return JsonResponse({"message":"successs"},status=200)
+    return JsonResponse({"message":"successs","total_likes":likes_count},status=200)
 
 
 def profileView(request,user_name):

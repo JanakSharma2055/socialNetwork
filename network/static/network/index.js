@@ -1,5 +1,53 @@
 console.log("hello from index")
 
+
+document.querySelectorAll(".like").forEach((btn) => {
+    
+    let value = btn.dataset.id;
+    btn.addEventListener("click", (event) => {
+        console.log("clicked:" + value)
+        fetch('/edit', {
+            method: 'POST',
+            body: JSON.stringify({change_like: true, val: value})
+        })
+         .then(response => response.json())
+         .then(result => {
+             if (result.error) {
+                 console.log(`Error liking post: ${result.error}`);
+             } else {
+                //  console.log("changed likedsds")
+                console.log(result)
+
+                 let likes_count = parseInt(document.querySelector(`#likes-${value}`).innerHTML)
+                 let result_count=result.total_likes
+                 console.log(likes_count)
+                 console.log(result_count)
+                 if(result_count<likes_count){
+                     document.querySelector(`#likes-${value}`).innerHTML=result_count
+                     btn.innerHTML = "<i class='mr-2 far fa-thumbs-up'></i>Like"
+
+                 }
+                 else if(result_count>likes_count){
+                    document.querySelector(`#likes-${value}`).innerHTML=result_count
+                    btn.innerHTML = "<div style='color: rgb(32, 120, 244);'><i class='mr-2 fas fa-thumbs-up'></i>Unlike</div>"
+
+                 }
+
+                //  if (parseInt(result.likes_num) < parseInt(likes_count.innerHTML)) {
+                //      btn.innerHTML = "<i class='mr-2 far fa-thumbs-up'></i>Like"
+                //  } else if (parseInt(result.likes_num) > parseInt(likes_count.innerHTML)) {
+                //      btn.innerHTML = "<div style='color: rgb(32, 120, 244);'><i class='mr-2 fas fa-thumbs-up'></i>Unlike</div>"
+                //  }
+                //  document.querySelector(`#likes${btn.dataset.postid}`).innerHTML = result.likes_num
+             }
+         })
+
+
+    }
+    )
+}
+)
+
 document.querySelectorAll(".edit").forEach((btn) => {
     let val = btn.dataset.id;
     btn.addEventListener("click", (event) => {
@@ -23,19 +71,19 @@ document.querySelectorAll(".edit").forEach((btn) => {
                 method: 'POST',
                 body: JSON.stringify({ post_Content, val })
             })
-            .then(response => response.json())
-                    .then(result => {
-                        if (result.error) {
-                            console.log(`Error: post is unable to change`);
-                        } else {
+                .then(response => response.json())
+                .then(result => {
+                    if (result.error) {
+                        console.log(`Error: post is unable to change`);
+                    } else {
 
-                            console.log(result)
-                            post_element.innerHTML=post_Content
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
+                        console.log(result)
+                        post_element.innerHTML = post_Content
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                })
 
 
 
@@ -45,3 +93,7 @@ document.querySelectorAll(".edit").forEach((btn) => {
 
     })
 })
+
+
+
+  

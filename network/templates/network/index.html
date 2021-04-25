@@ -20,12 +20,48 @@
     <div>
         <h1><a href="{% url 'profile' item.user.username %}">{{item.user.username}}</a></h1>
         {% if user == item.user %}
-        <button style="float: right; font-size: small; padding: 4px 10px" data-id="{{ item.id }}"
-            class="btn  edit">Edit
+        <button style="float: right; font-size: small; padding: 4px 10px" data-id="{{ item.id }}" class="btn  edit">Edit
         </button>
         {% endif %}
+        <p id="likes-{{item.id}}"">{{item.liked_post.count}}</p>
         <p>{{item.post_date}}</p>
         <h2 id="{{item.id}}">{{item.post}}</h2>
+        <div style="text-align: center">
+            {% if user.is_authenticated %}
+            <button data-id="{{ item.id }}" class="btn  like" style="width: 32.65%; display: inline-block">
+                {% if item.liked_post.all %}
+                    {% for p in item.liked_post.all %}
+                        
+
+                        {% if user == p.liked_by%}
+
+
+                        <div style="color: rgb(32, 120, 244);">
+                            <i class="mr-2 fas fa-thumbs-up"></i>Unlike
+                        </div>
+                        {% elif forloop.last and user != p.liked_by %}
+                        <div style="color: rgb(32, 120, 244);">
+                            <i class="mr-2 fas fa-thumbs-up"></i>Like
+                        </div>
+                    
+
+
+                        {% endif %}
+                    {% endfor %}
+
+                {% else %}
+                <div style="color: rgb(32, 120, 244);">
+                    <i class="mr-2 fas fa-thumbs-up"></i>Like
+                </div>
+
+                {% endif %}
+
+
+
+            </button>
+            {% endif %}
+        </div>
+
     </div>
     <hr>
     {% endfor %}
