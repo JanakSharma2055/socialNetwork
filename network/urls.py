@@ -12,3 +12,4 @@ urlpatterns = [
     path("profile/<str:user_name>",views.profileView,name="profile"),
     path("edit",views.editPost,name="editPost")
 ]
+

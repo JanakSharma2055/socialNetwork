@@ -24,12 +24,13 @@ document.querySelectorAll(".like").forEach((btn) => {
                  console.log(result_count)
                  if(result_count<likes_count){
                      document.querySelector(`#likes-${value}`).innerHTML=result_count
-                     btn.innerHTML = "<i class='mr-2 far fa-thumbs-up'></i>Like"
+                     btn.innerHTML = "<div style='color: rgb(235, 37, 70);'><i class=' far fa-heart fa-2x'></i></div>"
 
                  }
                  else if(result_count>likes_count){
                     document.querySelector(`#likes-${value}`).innerHTML=result_count
-                    btn.innerHTML = "<div style='color: rgb(32, 120, 244);'><i class='mr-2 fas fa-thumbs-up'></i>Unlike</div>"
+                    btn.innerHTML = "<div style='color: rgb(235, 37, 70);'><i class=' fas fa-heart fa-2x'></i></div>"
+                    
 
                  }
 
@@ -52,15 +53,16 @@ document.querySelectorAll(".edit").forEach((btn) => {
     let val = btn.dataset.id;
     btn.addEventListener("click", (event) => {
         let post_element = document.getElementById(val)
+        console.log(post_element)
         btn.disabled = true
         post_element.innerHTML = `
-        <form id="edit_post" class="card-text" style="margin-top: 1rem; margin-bottom: 1.6rem">
-                    <div class="form-group" style="margin-bottom: .7rem">
-                        <textarea 
+        <form id="edit_post" class="card-text" >
+                    <div class="form-outline " >
+                        <textarea class="form-control w-75" rows="2"
                             id="edit_post_content">${post_element.innerHTML}
                         </textarea>
                     </div>
-                    <input id="post-submit" type="submit" class="btn btn-primary " value="save"/>
+                    <input id="post-submit" type="submit" class="btn btn-secondary " value="save"/>
                 </form>
         `
 

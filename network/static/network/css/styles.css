@@ -1,0 +1,160 @@
+#sticky-sidebar {
+    height: 100%;
+    margin-right: 30px;
+    border-right:1px solid blue;
+}
+
+
+.input-post {
+    box-shadow: 10px 10px 8px #888888;
+    padding: 10px;
+    margin: 3px;
+    background-color: rgb(226, 224, 222);
+    
+}
+
+.home-header {
+    margin: 3px;
+
+}
+
+.allPosts {
+   
+    padding: 10px;
+}
+
+.post-item {
+    padding: 10px;
+    border-bottom: 1px solid blanchedalmond;
+    background-color: #F7F7F7;
+    border-radius: 7px;
+    margin-bottom: 10px;
+    box-shadow: 10px 10px 8px #888888;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(226, 224, 222);
+}
+.post-sub-header{
+    color: grey;
+    margin: 0px;
+    margin-left: 2px;
+    margin-bottom: 5px;
+}
+
+.post-item-content {
+    display: flex;
+   
+    width: 100%;
+    flex-direction: column;
+    margin-left: 5px;
+
+}
+.post-item-date{
+    color:grey;
+    
+
+
+}
+.post-item-data{
+    width: 100%;
+    display: flex;
+}
+
+.post-item-react {
+    
+   
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.react-item{
+    border-top: 1px solid cadetblue;
+    width: 30%;
+    
+    
+    text-align: center;
+}
+button.like{
+    padding: 0px;
+}
+button.cmt-share{
+    padding:0px;
+}
+button.like:focus,button.like::after {
+    outline: none;
+    box-shadow: none;
+   
+}
+
+
+
+.avatar-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.post-item-head-dat {
+    display: flex;
+    
+    align-items: flex-end;
+    width: 100%;
+}
+
+
+.edit {
+    display: flex;
+    align-self: flex-end;
+    margin-left: 60%;
+}
+/* profile section---------- */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+   
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+  }
+  
+  .title {
+    color: grey;
+    font-size: 18px;
+  }
+  .follow-list{
+  display:flex;
+  justify-content:space-evenly;
+  }
+  
+  .count{
+  color:grey;
+  }
+  button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    margin: auto;
+    padding: 8px;
+    color: white;
+    background-color: rgb(64, 26, 233);
+    text-align: center;
+    cursor: pointer;
+    width: 50%;
+    font-size: 18px;
+  }
+  
+  a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+  }
+  
+  button:hover, a:hover {
+    opacity: 0.7;
+  }
+ .profile-picture{
+     width: 120px;
+     height: 120px;
+     margin: auto;
+ }
