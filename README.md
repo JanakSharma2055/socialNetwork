@@ -1,6 +1,7 @@
 # Network
 
-It is the twitter like social network website for making posts and following users.
+It is the twitter like social network website for making posts and following users. A web project under
+cs50's web programming with python and javascript.
 
 
 ## Installation
